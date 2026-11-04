@@ -20,10 +20,11 @@ jobs:
       - run: python scripts/generar.py --actividad
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: python scripts/readme.py
       - name: Commit if the graph changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/activity-*.svg
+          git add assets/activity-*.svg assets/activity.json README.md README.es.md
           git diff --cached --quiet || git commit -m "chore: update activity graph"
           git push

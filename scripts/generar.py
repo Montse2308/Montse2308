@@ -93,23 +93,6 @@ class Lienzo:
                 f'aria-label="{html.escape(alt)}"><title>{html.escape(alt)}</title>{extra}<defs>{defs}</defs>{cuerpo}</svg>')
 
 
-def parte(t, size, maxw, w=400):
-    f = fuente(w)
-    lineas, cur = [], ""
-    for p in t.split():
-        prueba = (cur + " " + p).strip()
-        if cur and f.ancho(prueba, size) > maxw:
-            lineas.append(cur); cur = p
-        else:
-            cur = prueba
-    return lineas + [cur]
-
-
-def parrafo(L, x, y, t, size, fill, maxw, lh=1.45):
-    lineas = parte(t, size, maxw)
-    return "".join(L.texto(x, y + i * size * lh, l, size, fill) for i, l in enumerate(lineas)), y + (len(lineas) - 1) * size * lh
-
-
 def escribe(nombre, contenido):
     with open(os.path.join(ASSETS, nombre), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(contenido)
@@ -132,10 +115,10 @@ TXT = {
                  alt=("mcp-phase-gate, open-source MCP server in TypeScript and Node.js. It makes an AI agent work in 5 gated phases "
                       "and document each one before touching code. 1,400+ tests on Linux, Windows and macOS, 0 path escapes in 273 "
                       "attack cases, v4.0.0 on npm with provenance, 13 MCP tools.")),
-        pw=dict(sub="Independent research · TypeScript · Astro", l1="How it started",
-                t1=("I watched a video about the prisoner's dilemma and wondered what happens if you add more variants. There were "
-                    "a thousand. The psychology is what hooked me, and I wanted a portfolio project I really cared about instead of "
-                    "a generic CRUD app."),
+        pw=dict(sub="Independent research · TypeScript · Astro", l1="The question",
+                t1=("Why do people keep promises that no longer pay them? I asked myself after watching a video about the "
+                    "prisoner's dilemma. The classic experiment (Vanberg, 2008) can't tell personal guilt apart from commitment "
+                    "to the person; I propose the variable that does, background trust."),
                 l2="What came out of it",
                 t2=("A working paper on SSRN, backed by a deterministic simulation engine archived on Zenodo, and an illustrated "
                     "bilingual site that explains it."),
@@ -150,8 +133,8 @@ TXT = {
         alt_act="Contribution graph: {total} contributions in the last year, {priv} of them in private repos.",
         meses=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         fecha="{mes} {dia}, {anio}",
-        botones={"lang": "Español", "cv": "CV", "linkedin": "LinkedIn", "mail": "Email", "npm": "npm", "demo": "Live demo",
-                 "source": "Source", "site": "Website", "paper": "Paper · SSRN", "engine": "Engine · Zenodo"},
+        botones={"lang": "Español", "cv": "Download CV", "linkedin": "LinkedIn", "mail": "Email", "npm": "npm", "demo": "Live demo",
+                 "source": "Source", "site": "Website", "paper": "Paper (SSRN)", "engine": "Engine (Zenodo)"},
     ),
     "es": dict(
         sub_banner="Ingeniera de software · San Luis Potosí, México",
@@ -169,10 +152,10 @@ TXT = {
                  alt=("mcp-phase-gate, servidor MCP open source en TypeScript y Node.js. Obliga a un agente de IA a trabajar en 5 "
                       "fases con compuerta y a documentar cada una antes de tocar código. 1,400+ pruebas en Linux, Windows y macOS, "
                       "0 escapes de ruta en 273 casos de ataque, v4.0.0 en npm con provenance, 13 tools MCP.")),
-        pw=dict(sub="Investigación independiente · TypeScript · Astro", l1="Cómo empezó",
-                t1=("Vi un video sobre el dilema del prisionero y me pregunté qué pasaría si se le agregaban más variantes. Había "
-                    "mil. El lado psicológico fue el que me atrapó, y quería un proyecto para mi portafolio que de verdad me "
-                    "apasionara, en lugar de un CRUD genérico."),
+        pw=dict(sub="Investigación independiente · TypeScript · Astro", l1="La pregunta",
+                t1=("¿Por qué la gente cumple promesas que ya no le convienen? Me lo pregunté después de ver un video sobre el "
+                    "dilema del prisionero. El experimento clásico (Vanberg, 2008) no distingue entre culpa personal y compromiso "
+                    "con la persona; propongo la variable que sí lo hace, la confianza de fondo."),
                 l2="Qué salió de ahí",
                 t2=("Un working paper en SSRN, respaldado por un motor de simulación determinista archivado en Zenodo, y un sitio "
                     "ilustrado y bilingüe que lo explica."),
@@ -188,8 +171,8 @@ TXT = {
         alt_act="Gráfica de contribuciones: {total} en el último año, {priv} en repos privados.",
         meses=["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
         fecha="{dia} {mes} {anio}",
-        botones={"lang": "English", "cv": "CV", "linkedin": "LinkedIn", "mail": "Correo", "npm": "npm", "demo": "Demo",
-                 "source": "Código", "site": "Sitio", "paper": "Paper · SSRN", "engine": "Motor · Zenodo"},
+        botones={"lang": "English", "cv": "Descargar CV", "linkedin": "LinkedIn", "mail": "Correo", "npm": "npm", "demo": "Demo",
+                 "source": "Código", "site": "Sitio", "paper": "Paper (SSRN)", "engine": "Motor (Zenodo)"},
     ),
 }
 TITULOS = {"mpg": "mcp-phase-gate", "pw": "Promises to Whom"}
@@ -228,9 +211,8 @@ def metro(L, P, etiquetas):
         out.append(f'<circle class="mv" r="4" fill="{P["ink"]}" style="offset-path:path(\'{p}\');'
                    f'offset-distance:{quieto:.0f}%;--d:{dur:.1f}s;--b:{ini:.2f}s"/>')
     if etiquetas:
-        out.append(L.texto(600, 62, "feature", 12, P["muted"], mono=True) + L.texto(700, 258, "fix", 12, P["muted"], mono=True)
-                   + L.texto(1100, 175, "main", 12, P["ink"], mono=True)
-                   + L.texto(1160, 288, "main · feature · fix", 12, P["muted"], anchor="end", mono=True))
+        out.append(L.texto(600, 62, "feature", 15, P["muted"], mono=True) + L.texto(700, 258, "fix", 15, P["muted"], mono=True)
+                   + L.texto(1100, 178, "main", 15, P["ink"], mono=True))
     return "".join(out)
 
 
@@ -239,7 +221,7 @@ def banner(idioma, tema, var):
     if var == "wide":
         W, H = 1200, 300
         c = (metro(L, P, True) + L.texto(60, 104, "Montserrat Ximena", 40, P["ink"], 600)
-             + L.texto(60, 152, "Hernández Gallegos", 40, P["ink"], 600) + L.texto(60, 190, t["sub_banner"], 18, P["muted"])
+             + L.texto(60, 152, "Hernández Gallegos", 40, P["ink"], 600) + L.texto(60, 194, t["sub_banner"], 22, P["muted"])
              + f'<rect x="60" y="210" width="48" height="3" rx="1.5" fill="{P["pink"]}"/>')
     else:
         W, H = 600, 360
@@ -250,73 +232,68 @@ def banner(idioma, tema, var):
     return L.svg(W, H, fondo + c, t["alt_banner"], CSS_MOV)
 
 
-# ───────────────────────── project cards
+# ───────────────────────── section titles and project cards (only large type, so they stay sharp)
+SECCIONES = {"en": [("projects", "Projects"), ("tools", "Tools I work with"), ("activity", "Activity")],
+             "es": [("projects", "Proyectos"), ("tools", "Herramientas con las que trabajo"), ("activity", "Actividad")]}
+
+
+def encabezado(texto, num, tema, var):
+    """Section title as a metro station: number in pink, large title, and the banner's line carrying on."""
+    P, L = PAL[tema], Lienzo()
+    W, H, r, size = (1000, 64, 17, 30) if var == "wide" else (440, 56, 15, 24)
+    cx, cy = r + 9, H // 2
+    x1 = cx + r + 15 + fuente(600).ancho(texto, size) + 24
+    c = (f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{P["bg"]}" stroke="{P["pink"]}" stroke-width="3"/>'
+         + L.texto(cx, cy + 6, num, 16, P["pink"], 600, "middle", mono=True)
+         + L.texto(cx + r + 15, cy + size * 0.36, texto, size, P["ink"], 600))
+    if x1 < W - 60:
+        c += f'<path d="M{x1:.0f},{cy}H{W - 12}" stroke="{P["acc2"]}" stroke-width="4" stroke-linecap="round"/>'
+        for x in range(int(x1) + 40, W - 30, 70):
+            c += f'<circle cx="{x}" cy="{cy}" r="5" fill="{P["bg"]}" stroke="{P["acc2"]}" stroke-width="2.5"/>'
+    return L.svg(W, H, c, texto)
+
+
+def _parte(t, size, maxw):
+    lineas, cur = [], ""
+    for p in t.split():
+        prueba = (cur + " " + p).strip()
+        if cur and fuente().ancho(prueba, size) > maxw:
+            lineas.append(cur); cur = p
+        else:
+            cur = prueba
+    return lineas + [cur]
+
+
 def tarjeta(idioma, clave, tema, var):
+    """Pink bar, name and the four numbers. The paragraphs go as real text under the card."""
     P, d, L = PAL[tema], TXT[idioma][clave], Lienzo()
-    i, m, a, pk = P["ink"], P["muted"], P["acc"], P["pink"]
+    alt = f"{TITULOS[clave]}. " + "; ".join(f"{n} {l}" for n, l in d["cifras"]) + "."
     if var == "wide":
-        W = 1000
-        c = L.texto(44, 66, TITULOS[clave], 36, i, 600) + L.texto(44, 98, d["sub"], 18, m)
-        y = 146
-        c += L.texto(44, y, d["l1"].upper(), 13, pk, 600)
-        p, y = parrafo(L, 44, y + 30, d["t1"], 18.5, i, 560); c += p
-        y += 44
-        c += L.texto(44, y, d["l2"].upper(), 13, pk, 600)
-        p, y = parrafo(L, 44, y + 30, d["t2"], 18.5, i, 560); c += p
-        H = max(int(y) + 40, 380)
-        c += f'<path d="M650,40V{H - 40}" stroke="{P["line"]}" stroke-width="2"/>'
-        paso = (H - 80) / 4
-        for k, (n, l) in enumerate(d["cifras"]):
-            yy = 40 + paso * k + paso / 2
-            c += L.texto(684, yy + 4, n, 34, a, 600)
-            for j, ln in enumerate(parte(l, 15.5, 280)):
-                c += L.texto(684, yy + 30 + j * 20, ln, 15.5, m)
+        W, cols, x0, col_w, lab = 1000, 4, 44, 232, 20
+        c = L.texto(44, 68, TITULOS[clave], 40, P["ink"], 600) + L.texto(44, 102, d["sub"], 21, P["muted"])
+        y_sep, y_num, size_num = 128, 182, 42
     else:
-        W = 440
-        c = L.texto(28, 52, TITULOS[clave], 28, i, 600) + L.texto(28, 78, d["sub"], 14.5, m)
-        y = 116
-        c += L.texto(28, y, d["l1"].upper(), 12, pk, 600)
-        p, y = parrafo(L, 28, y + 26, d["t1"], 16.5, i, 384); c += p
-        y += 36
-        c += L.texto(28, y, d["l2"].upper(), 12, pk, 600)
-        p, y = parrafo(L, 28, y + 26, d["t2"], 16.5, i, 384); c += p
-        y += 30
-        c += f'<path d="M28,{y:.0f}H412" stroke="{P["line"]}" stroke-width="2"/>'
-        yy = y + 50
-        for fila_ in (d["cifras"][:2], d["cifras"][2:]):  # each row is as tall as its longest label
-            lineas = [parte(l, 14, 175) for _, l in fila_]
-            for k, (n, _) in enumerate(fila_):
-                x = 28 + k * 200
-                c += L.texto(x, yy, n, 28, a, 600)
-                for j, ln in enumerate(lineas[k]):
-                    c += L.texto(x, yy + 24 + j * 18, ln, 14, m)
-            yy += 24 + max(map(len, lineas)) * 18 + 30
-        H = int(yy + 4)
+        W, cols, x0, col_w, lab = 440, 2, 30, 200, 18
+        c = L.texto(30, 56, TITULOS[clave], 32, P["ink"], 600)
+        y = 86
+        for ln in _parte(d["sub"], 18, 380):
+            c += L.texto(30, y, ln, 18, P["muted"]); y += 24
+        y_sep, y_num, size_num = y + 4, y + 56, 36
+    c += f'<path d="M{x0},{y_sep}H{W - x0}" stroke="{P["line"]}" stroke-width="2"/>'
+    y_row = y_num
+    for f0 in range(0, 4, cols):
+        fila = d["cifras"][f0:f0 + cols]
+        lineas = [_parte(l, lab, col_w - 27) for _, l in fila]
+        for k, (n, _) in enumerate(fila):
+            x = x0 + k * col_w
+            c += L.texto(x, y_row, n, size_num, P["acc"], 600)
+            for j, ln in enumerate(lineas[k]):
+                c += L.texto(x, y_row + lab + 10 + j * (lab + 4), ln, lab, P["muted"])
+        y_row += lab + 10 + max(map(len, lineas)) * (lab + 4) + (size_num + 14 if f0 + cols < 4 else 0)
+    H = int(y_row + 8)
     caja = (f'<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="14" fill="{P["bg"]}" stroke="{P["line"]}" stroke-width="2"/>'
-            f'<rect x="1" y="1" width="8" height="{H - 2}" rx="4" fill="{pk}"/>')
-    return L.svg(W, H, caja + c, d["alt"])
-
-
-# ───────────────────────── tools
-def stack(idioma, tema, var):
-    P, t, L = PAL[tema], TXT[idioma], Lienzo()
-    i, m = P["ink"], P["muted"]
-    alt = t["alt_stack"] + " " + " ".join(f"{n}: {', '.join(it)}." for n, it in zip(t["cats"], STACK))
-    c = ""
-    if var == "wide":
-        W, H = 1000, 210
-        for k, (n, it) in enumerate(zip(t["cats"], STACK)):
-            x, y = 20 + (k % 3) * 330, 40 + (k // 3) * 96
-            c += L.texto(x, y, n.upper(), 13, m, 600, mono=True)
-            c += L.texto(x, y + 30, " · ".join(it[:3]), 19, i) + L.texto(x, y + 56, " · ".join(it[3:]), 19, i)
-    else:
-        W, H = 440, 545
-        for k, (n, it) in enumerate(zip(t["cats"], STACK)):
-            x, y = 16 + (k % 2) * 214, 30 + (k // 2) * 178
-            c += L.texto(x, y, n.upper(), 12, m, 600, mono=True)
-            for j, s in enumerate(it):
-                c += L.texto(x, y + 28 + j * 25, s, 17.5, i)
-    return L.svg(W, H, c, alt)
+            f'<rect x="1" y="1" width="8" height="{H - 2}" rx="4" fill="{P["pink"]}"/>')
+    return L.svg(W, H, caja + c, alt)
 
 
 # ───────────────────────── activity
@@ -336,60 +313,40 @@ def actividad_datos():
     return semanas, u["contributionCalendar"]["totalContributions"], u["restrictedContributionsCount"]
 
 
-def actividad(idioma, tema, var, datos, hoy):
+def actividad(idioma, tema, var, datos):
+    """Only the grid of squares. The title and the numbers are real text in the README, so they stay sharp."""
     semanas, total, priv = datos
     P, t, L = PAL[tema], TXT[idioma], Lienzo()
-    f = t["fecha"].format(mes=t["meses"][hoy.month - 1], dia=hoy.day, anio=hoy.year)
-    total_s, priv_s = f"{total:,}", f"{priv:,}"
     niveles = [P["line"], P["acc2"], P["acc"], P["pink"]]
     color = lambda n: niveles[0] if n == 0 else niveles[1] if n < 6 else niveles[2] if n < 20 else niveles[3]
     if var == "wide":
-        W, cel, gap, x0, y0, sem = 1000, 14, 3.4, 40, 74, semanas
+        W, cel, gap, x0, y0, sem = 1000, 14, 3.4, 40, 6, semanas
     else:
-        W, cel, gap, x0, y0, sem = 440, 12.5, 2.8, 22, 74, semanas[-26:]
-    c = L.texto(x0, 34, t["act"][0].format(total=total_s), 20 if var == "wide" else 17, P["ink"], 600)
-    c += L.texto(x0, 58, t["act"][1].format(priv=priv_s, fecha=f), 14 if var == "wide" else 13, P["muted"])
+        W, cel, gap, x0, y0, sem = 440, 12.5, 2.8, 21, 6, semanas[-26:]
+    c = ""
     for k, w in enumerate(sem):
         for d, n in enumerate(w):
             c += f'<rect x="{x0 + k * (cel + gap):.1f}" y="{y0 + d * (cel + gap):.1f}" width="{cel}" height="{cel}" rx="3" fill="{color(n)}"/>'
-    H = int(y0 + 7 * (cel + gap) + 44)
-    ly, lx = H - 22, x0
-    c += L.texto(lx, ly + 4, t["act"][2], 12, P["muted"], mono=True); lx += fuente(mono=True).ancho(t["act"][2], 12) + 10
-    for col in niveles:
-        c += f'<rect x="{lx:.1f}" y="{ly - 8}" width="12" height="12" rx="3" fill="{col}"/>'; lx += 17
-    c += L.texto(lx + 6, ly + 4, t["act"][3], 12, P["muted"], mono=True)
-    if var == "tall":
-        c += L.texto(W - 22, ly + 4, t["act"][4], 12, P["muted"], anchor="end", mono=True)
-    return L.svg(W, H, c, t["alt_act"].format(total=total_s, priv=priv_s))
-
-
-# ───────────────────────── buttons
-def boton(texto, tema):
-    P, L = PAL[tema], Lienzo()
-    size, pad, h = 26, 26, 56
-    w = fuente().ancho(texto, size) + pad * 2 + 22
-    c = (f'<rect x="1.5" y="1.5" width="{w - 3:.0f}" height="{h - 3}" rx="{(h - 3) / 2}" fill="{P["bg"]}" stroke="{P["line"]}" stroke-width="2"/>'
-         f'<circle cx="{pad + 4}" cy="{h / 2}" r="5" fill="{P["pink"]}"/>' + L.texto(pad + 22, 37, texto, size, P["ink"]))
-    return L.svg(int(w), h, c, texto)
+    H = int(y0 + 7 * (cel + gap) + 6)
+    return L.svg(W, H, c, t["alt_act"].format(total=f"{total:,}", priv=f"{priv:,}"))
 
 
 def main():
     os.makedirs(ASSETS, exist_ok=True)
     solo_actividad = "--actividad" in sys.argv
-    datos, hoy = actividad_datos(), datetime.date.today()
+    datos = actividad_datos()
+    with open(os.path.join(ASSETS, "activity.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"total": datos[1], "priv": datos[2], "fecha": datetime.date.today().isoformat()}, fh)
     for idioma in TXT:
         for tema in PAL:
             for var in ("wide", "tall"):
-                escribe(f"activity-{var}-{tema}.{idioma}.svg", actividad(idioma, tema, var, datos, hoy))
-                if solo_actividad:
-                    continue
-                escribe(f"banner-{var}-{tema}.{idioma}.svg", banner(idioma, tema, var))
-                escribe(f"stack-{var}-{tema}.{idioma}.svg", stack(idioma, tema, var))
-                for clave in TITULOS:
-                    escribe(f"card-{clave}-{var}-{tema}.{idioma}.svg", tarjeta(idioma, clave, tema, var))
-            if not solo_actividad:
-                for k, texto in TXT[idioma]["botones"].items():
-                    escribe(f"btn-{k}-{tema}.{idioma}.svg", boton(texto, tema))
+                escribe(f"activity-{var}-{tema}.{idioma}.svg", actividad(idioma, tema, var, datos))
+                if not solo_actividad:
+                    escribe(f"banner-{var}-{tema}.{idioma}.svg", banner(idioma, tema, var))
+                    for clave in TITULOS:
+                        escribe(f"card-{clave}-{var}-{tema}.{idioma}.svg", tarjeta(idioma, clave, tema, var))
+                    for i, (clave, texto) in enumerate(SECCIONES[idioma]):
+                        escribe(f"h-{clave}-{var}-{tema}.{idioma}.svg", encabezado(texto, f"{i + 1:02}", tema, var))
     print(f"ok · {datos[1]:,} contributions")
 
 

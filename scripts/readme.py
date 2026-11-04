@@ -1,17 +1,23 @@
 """Writes README.md (English) and README.es.md (Spanish) from one template, so both always say the same thing.
-Run it after generar.py whenever the text changes."""
-import html
-import os
 
+Only the banner and the activity grid are images. Everything that is read (links, paragraphs, numbers, tools) is
+real text, so it stays sharp on any screen. The activity numbers come from assets/activity.json, which
+generar.py --actividad refreshes; the monthly Action runs both scripts.
+"""
+import datetime
+import html
+import json
+import os
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, AQUI)
-from generar import TXT  # noqa: E402
+from generar import SECCIONES, STACK, TITULOS, TXT  # noqa: E402
 
+RAW = "https://github.com/Montse2308/Montse2308/raw/main/"  # /raw/ makes GitHub download the file
 LINKS = {
-    "linkedin": "https://www.linkedin.com/in/montserrat-ximena-hern%C3%A1ndez-gallegos-536195276",
+    "linkedin": "https://www.linkedin.com/in/montserrat-ximena-hernandez-gallegos",
     "mail": "mailto:gallegos230804@gmail.com",
     "npm": "https://www.npmjs.com/package/mcp-phase-gate",
     "demo": "https://montse2308.github.io/mcp-phase-gate/demo/",
@@ -54,41 +60,77 @@ def pic(base, idioma, alt):
             f'<img src="{a}-wide-light.{idioma}.svg" alt="{html.escape(alt)}" width="100%"></picture>')
 
 
-def btn(k, link, idioma):
-    alt = TXT[idioma]["botones"][k]
-    return (f'<a href="{link}"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-{k}-dark.{idioma}.svg">'
-            f'<img src="assets/btn-{k}-light.{idioma}.svg" alt="{html.escape(alt)}" height="28"></picture></a>')
+def enlaces(idioma, *pares):
+    b = TXT[idioma]["botones"]
+    return " · ".join(f"[{b[k]}]({l})" for k, l in pares)
 
 
-def fila(idioma, *pares, align="left"):
-    return f'<p align="{align}">\n' + "\n".join(btn(k, l, idioma) for k, l in pares) + "\n</p>"
+def cifras(lista):
+    """2 x 2 table: it stays readable on a phone, where 4 columns get squeezed."""
+    celdas = [f'<td width="50%" valign="top"><b>{html.escape(n)}</b><br>{html.escape(l)}</td>' for n, l in lista]
+    filas = "".join(f"<tr>{celdas[k]}{celdas[k + 1]}</tr>\n" for k in range(0, len(celdas), 2))
+    return f"<table>\n{filas}</table>"
+
+
+def proyecto(idioma, clave, links):
+    """Card image (name and numbers, large type only), then the paragraphs as real text, then the links."""
+    d = TXT[idioma][clave]
+    alt = f"{TITULOS[clave]}, {d['sub']}. " + "; ".join(f"{n} {l}" for n, l in d["cifras"]) + "."
+    return (f"{pic('card-' + clave, idioma, alt)}\n\n**{d['l1']}.** {d['t1']}\n\n**{d['l2']}.** {d['t2']}\n\n"
+            f"{enlaces(idioma, *links)}")
+
+
+def seccion(idioma, clave):
+    texto = dict(SECCIONES[idioma])[clave]
+    return pic(f"h-{clave}", idioma, texto)
+
+
+def herramientas(idioma):
+    celdas = [f'<td width="50%" valign="top"><b>{html.escape(n)}</b><br>{" ".join(f"<kbd>{html.escape(i)}</kbd>" for i in it)}</td>'
+              for n, it in zip(TXT[idioma]["cats"], STACK)]
+    filas = "".join(f"<tr>{celdas[k]}{celdas[k + 1]}</tr>\n" for k in range(0, len(celdas), 2))
+    return f"<table>\n{filas}</table>"
+
+
+def actividad(idioma):
+    with open(os.path.join(RAIZ, "assets", "activity.json"), encoding="utf-8") as fh:
+        a = json.load(fh)
+    t, f = TXT[idioma], datetime.date.fromisoformat(a["fecha"])
+    fecha = t["fecha"].format(mes=t["meses"][f.month - 1], dia=f.day, anio=f.year)
+    total, priv = f"{a['total']:,}", f"{a['priv']:,}"
+    return (f"**{t['act'][0].format(total=total)}**<br>\n"
+            f"<sub>{t['act'][1].format(priv=priv, fecha=fecha)}</sub>\n\n"
+            f"{pic('activity', idioma, t['alt_act'].format(total=total, priv=priv))}")
 
 
 def readme(idioma):
     t, x = TEXTO[idioma], TXT[idioma]
+    mpg = proyecto(idioma, "mpg", (("npm", LINKS["npm"]), ("demo", LINKS["demo"]), ("source", LINKS["mpg"])))
+    pw = proyecto(idioma, "pw", (("site", LINKS["site"]), ("paper", LINKS["paper"]),
+                                 ("engine", LINKS["engine"]), ("source", LINKS["engine_src"])))
     return f"""{pic("banner", idioma, x["alt_banner"])}
 
-{fila(idioma, ("lang", t["otro"]), ("cv", t["cv"]), ("linkedin", LINKS["linkedin"]), ("mail", LINKS["mail"]), align="center")}
+<div align="center">
+
+{enlaces(idioma, ("lang", t["otro"]), ("cv", RAW + t["cv"]), ("linkedin", LINKS["linkedin"]), ("mail", LINKS["mail"]))}
+
+</div>
 
 {t["quien"]}
 
-### {t["h_proy"]}
+{seccion(idioma, "projects")}
 
-{pic("card-mpg", idioma, x["mpg"]["alt"])}
+{mpg}
 
-{fila(idioma, ("npm", LINKS["npm"]), ("demo", LINKS["demo"]), ("source", LINKS["mpg"]))}
+{pw}
 
-{pic("card-pw", idioma, x["pw"]["alt"])}
+{seccion(idioma, "tools")}
 
-{fila(idioma, ("site", LINKS["site"]), ("paper", LINKS["paper"]), ("engine", LINKS["engine"]), ("source", LINKS["engine_src"]))}
+{herramientas(idioma)}
 
-### {t["h_stack"]}
+{seccion(idioma, "activity")}
 
-{pic("stack", idioma, x["alt_stack"])}
-
-### {t["h_act"]}
-
-{pic("activity", idioma, x["alt_act"].split(":")[0])}
+{actividad(idioma)}
 
 <sub>{t["edu"]}<br>{t["personal"]}</sub>
 """
