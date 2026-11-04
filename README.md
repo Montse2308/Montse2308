@@ -36,9 +36,9 @@ I'm a software engineer from San Luis Potosí, Mexico. I work full stack on inte
 
 <picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/h-activity-tall-dark.en.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/h-activity-wide-dark.en.svg"><source media="(max-width: 600px)" srcset="assets/h-activity-tall-light.en.svg"><img src="assets/h-activity-wide-light.en.svg" alt="Activity" width="100%"></picture>
 
-**2,297 contributions in the last year**<br>
-<sub>1,337 of them in private repos · updated Nov 4, 2026</sub>
+**2,298 contributions in the last year**<br>
+<sub>1,334 of them in private repos · updated Nov 4, 2026</sub>
 
-<picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/activity-tall-dark.en.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/activity-wide-dark.en.svg"><source media="(max-width: 600px)" srcset="assets/activity-tall-light.en.svg"><img src="assets/activity-wide-light.en.svg" alt="Contribution graph: 2,297 contributions in the last year, 1,337 of them in private repos." width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/activity-tall-dark.en.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/activity-wide-dark.en.svg"><source media="(max-width: 600px)" srcset="assets/activity-tall-light.en.svg"><img src="assets/activity-wide-light.en.svg" alt="Contribution graph: 2,298 contributions in the last year, 1,334 of them in private repos." width="100%"></picture>
 
 <sub>B.Eng. in Intelligent Systems Engineering, UASLP · CENEVAL Award for Excellence (EGEL national exit exam)<br>Outside of code: football, rugby and the gym, poetry and philosophy, physics, and being outdoors.</sub>
