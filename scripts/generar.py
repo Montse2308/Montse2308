@@ -6,7 +6,7 @@ defined once per file and reused with <use>, which keeps the files small.
 
     pip install -r scripts/requirements.txt
     python scripts/generar.py              # everything
-    python scripts/generar.py --actividad  # only the activity graph (what the monthly Action runs)
+    python scripts/generar.py --actividad  # only the activity graph (what the weekly Action runs)
 
 The activity graph reads the contribution calendar from the GitHub API. It needs a token in GITHUB_TOKEN
 (or a logged-in `gh`). Private contributions are counted because the profile shows them.

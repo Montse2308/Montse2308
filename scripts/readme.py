@@ -2,7 +2,7 @@
 
 Only the banner and the activity grid are images. Everything that is read (links, paragraphs, numbers, tools) is
 real text, so it stays sharp on any screen. The activity numbers come from assets/activity.json, which
-generar.py --actividad refreshes; the monthly Action runs both scripts.
+generar.py --actividad refreshes; the weekly Action runs both scripts.
 """
 import datetime
 import html
