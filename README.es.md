@@ -37,8 +37,8 @@ Soy ingeniera de software, de San Luis Potosí, México. Trabajo full stack en s
 <picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/h-activity-tall-dark.es.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/h-activity-wide-dark.es.svg"><source media="(max-width: 600px)" srcset="assets/h-activity-tall-light.es.svg"><img src="assets/h-activity-wide-light.es.svg" alt="Actividad" width="100%"></picture>
 
 **2,298 contribuciones en el último año**<br>
-<sub>1,334 en repos privados · actualizado el 4 nov 2026</sub>
+<sub>1,333 en repos privados · actualizado el 9 nov 2026</sub>
 
-<picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/activity-tall-dark.es.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/activity-wide-dark.es.svg"><source media="(max-width: 600px)" srcset="assets/activity-tall-light.es.svg"><img src="assets/activity-wide-light.es.svg" alt="Gráfica de contribuciones: 2,298 en el último año, 1,334 en repos privados." width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/activity-tall-dark.es.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/activity-wide-dark.es.svg"><source media="(max-width: 600px)" srcset="assets/activity-tall-light.es.svg"><img src="assets/activity-wide-light.es.svg" alt="Gráfica de contribuciones: 2,298 en el último año, 1,333 en repos privados." width="100%"></picture>
 
 <sub>Ingeniería en Sistemas Inteligentes, UASLP · Premio Ceneval al Desempeño de Excelencia-EGEL<br>Fuera del código: fútbol, rugby y gym, poesía y filosofía, física, y el aire libre.</sub>
