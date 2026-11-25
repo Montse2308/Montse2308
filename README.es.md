@@ -31,7 +31,7 @@ Soy ingeniera de software, de San Luis Potosí, México. Trabajo full stack en s
 <table>
 <tr><td width="50%" valign="top"><b>Lenguajes</b><br><kbd>TypeScript</kbd> <kbd>PHP</kbd> <kbd>JavaScript</kbd> <kbd>SQL</kbd> <kbd>Python</kbd></td><td width="50%" valign="top"><b>Backend</b><br><kbd>Laravel</kbd> <kbd>Livewire</kbd> <kbd>NestJS</kbd> <kbd>Node.js</kbd> <kbd>REST APIs</kbd></td></tr>
 <tr><td width="50%" valign="top"><b>IA e integraciones</b><br><kbd>MCP</kbd> <kbd>n8n</kbd> <kbd>Authorize.Net</kbd> <kbd>Stripe</kbd> <kbd>Twilio</kbd></td><td width="50%" valign="top"><b>Frontend</b><br><kbd>React</kbd> <kbd>Tailwind CSS</kbd> <kbd>Astro</kbd> <kbd>Vite</kbd> <kbd>Preact</kbd></td></tr>
-<tr><td width="50%" valign="top"><b>Datos</b><br><kbd>MySQL</kbd> <kbd>PostgreSQL</kbd> <kbd>TypeORM</kbd> <kbd>pandas</kbd> <kbd>scikit-learn</kbd></td><td width="50%" valign="top"><b>Testing y DevOps</b><br><kbd>Vitest</kbd> <kbd>node:test</kbd> <kbd>Playwright</kbd> <kbd>GitHub Actions</kbd> <kbd>Git</kbd></td></tr>
+<tr><td width="50%" valign="top"><b>Datos</b><br><kbd>MySQL</kbd> <kbd>PostgreSQL</kbd> <kbd>Redis</kbd> <kbd>TypeORM</kbd> <kbd>pandas</kbd> <kbd>scikit-learn</kbd></td><td width="50%" valign="top"><b>Testing y DevOps</b><br><kbd>Vitest</kbd> <kbd>node:test</kbd> <kbd>Playwright</kbd> <kbd>GitHub Actions</kbd> <kbd>Docker</kbd> <kbd>Git</kbd></td></tr>
 </table>
 
 <picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/h-activity-tall-dark.es.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/h-activity-wide-dark.es.svg"><source media="(max-width: 600px)" srcset="assets/h-activity-tall-light.es.svg"><img src="assets/h-activity-wide-light.es.svg" alt="Actividad" width="100%"></picture>

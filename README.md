@@ -31,7 +31,7 @@ I'm a software engineer from San Luis Potosí, Mexico. I work full stack on inte
 <table>
 <tr><td width="50%" valign="top"><b>Languages</b><br><kbd>TypeScript</kbd> <kbd>PHP</kbd> <kbd>JavaScript</kbd> <kbd>SQL</kbd> <kbd>Python</kbd></td><td width="50%" valign="top"><b>Backend</b><br><kbd>Laravel</kbd> <kbd>Livewire</kbd> <kbd>NestJS</kbd> <kbd>Node.js</kbd> <kbd>REST APIs</kbd></td></tr>
 <tr><td width="50%" valign="top"><b>AI &amp; integrations</b><br><kbd>MCP</kbd> <kbd>n8n</kbd> <kbd>Authorize.Net</kbd> <kbd>Stripe</kbd> <kbd>Twilio</kbd></td><td width="50%" valign="top"><b>Frontend</b><br><kbd>React</kbd> <kbd>Tailwind CSS</kbd> <kbd>Astro</kbd> <kbd>Vite</kbd> <kbd>Preact</kbd></td></tr>
-<tr><td width="50%" valign="top"><b>Data</b><br><kbd>MySQL</kbd> <kbd>PostgreSQL</kbd> <kbd>TypeORM</kbd> <kbd>pandas</kbd> <kbd>scikit-learn</kbd></td><td width="50%" valign="top"><b>Testing &amp; DevOps</b><br><kbd>Vitest</kbd> <kbd>node:test</kbd> <kbd>Playwright</kbd> <kbd>GitHub Actions</kbd> <kbd>Git</kbd></td></tr>
+<tr><td width="50%" valign="top"><b>Data</b><br><kbd>MySQL</kbd> <kbd>PostgreSQL</kbd> <kbd>Redis</kbd> <kbd>TypeORM</kbd> <kbd>pandas</kbd> <kbd>scikit-learn</kbd></td><td width="50%" valign="top"><b>Testing &amp; DevOps</b><br><kbd>Vitest</kbd> <kbd>node:test</kbd> <kbd>Playwright</kbd> <kbd>GitHub Actions</kbd> <kbd>Docker</kbd> <kbd>Git</kbd></td></tr>
 </table>
 
 <picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/h-activity-tall-dark.en.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/h-activity-wide-dark.en.svg"><source media="(max-width: 600px)" srcset="assets/h-activity-tall-light.en.svg"><img src="assets/h-activity-wide-light.en.svg" alt="Activity" width="100%"></picture>
